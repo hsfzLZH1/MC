@@ -1,0 +1,19 @@
+digraph {
+  splines=true;
+  node[fontname="Consolas",fontsize=16]
+  edge[fontname="Consolas",fontsize=16]
+  node[shape=circle]
+  A;
+  B;
+  node[shape=doublecircle]
+  C;
+  inv[label="",shape=none,height=.0,width=.0];
+  {rank="same";inv;A;B;C;}
+  inv->A;
+  A:ne->A:nw[label="1"];
+  A->B[xlabel="0"];
+  B:sw->A[label="1"];
+  B->C[xlabel="0"];
+  C:ne->C:nw[label="0"];
+  C:s->A:s[xlabel="1"];
+}

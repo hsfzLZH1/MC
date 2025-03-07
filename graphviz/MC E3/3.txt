@@ -1,0 +1,17 @@
+digraph {
+  node[fontname="Consolas",fontsize=16]
+  edge[fontname="Consolas",fontsize=16]
+  node[shape=doublecircle]
+  A;
+  B;
+  node[shape=circle]
+  C;
+  inv[label="",shape=none,height=.0,width=.0];
+  {rank="same";inv;A;B;C;}
+  inv->A;
+  A:ne->A:nw[label="a"];
+  A->B[xlabel="b"];
+  B->C[xlabel="a"];
+  B:ne->B:nw[label="b"];
+  C:ne->C:nw[label="a,b"];
+}

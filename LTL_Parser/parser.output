@@ -1,0 +1,370 @@
+Grammar
+
+    0 $accept: WHOLE $end
+
+    1 WHOLE: EXPR
+
+    2 EXPR: TM_T
+    3     | TM_ID
+    4     | TM_L EXPR TM_R
+    5     | TM_NEG EXPR
+    6     | TM_NXT EXPR
+    7     | TM_ALW EXPR
+    8     | TM_EVE EXPR
+    9     | EXPR TM_AND EXPR
+   10     | EXPR TM_OR EXPR
+   11     | EXPR TM_IMP EXPR
+   12     | EXPR TM_UTL EXPR
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+TM_ID (258) 3
+TM_NEG (259) 5
+TM_T (260) 2
+TM_AND (261) 9
+TM_OR (262) 10
+TM_IMP (263) 11
+TM_NXT (264) 6
+TM_ALW (265) 7
+TM_EVE (266) 8
+TM_UTL (267) 12
+TM_L (268) 4
+TM_R (269) 4
+
+
+Nonterminals, with rules where they appear
+
+$accept (15)
+    on left: 0
+WHOLE (16)
+    on left: 1, on right: 0
+EXPR (17)
+    on left: 2 3 4 5 6 7 8 9 10 11 12, on right: 1 4 5 6 7 8 9 10 11
+    12
+
+
+State 0
+
+    0 $accept: . WHOLE $end
+
+    TM_ID   shift, and go to state 1
+    TM_NEG  shift, and go to state 2
+    TM_T    shift, and go to state 3
+    TM_NXT  shift, and go to state 4
+    TM_ALW  shift, and go to state 5
+    TM_EVE  shift, and go to state 6
+    TM_L    shift, and go to state 7
+
+    WHOLE  go to state 8
+    EXPR   go to state 9
+
+
+State 1
+
+    3 EXPR: TM_ID .
+
+    $default  reduce using rule 3 (EXPR)
+
+
+State 2
+
+    5 EXPR: TM_NEG . EXPR
+
+    TM_ID   shift, and go to state 1
+    TM_NEG  shift, and go to state 2
+    TM_T    shift, and go to state 3
+    TM_NXT  shift, and go to state 4
+    TM_ALW  shift, and go to state 5
+    TM_EVE  shift, and go to state 6
+    TM_L    shift, and go to state 7
+
+    EXPR  go to state 10
+
+
+State 3
+
+    2 EXPR: TM_T .
+
+    $default  reduce using rule 2 (EXPR)
+
+
+State 4
+
+    6 EXPR: TM_NXT . EXPR
+
+    TM_ID   shift, and go to state 1
+    TM_NEG  shift, and go to state 2
+    TM_T    shift, and go to state 3
+    TM_NXT  shift, and go to state 4
+    TM_ALW  shift, and go to state 5
+    TM_EVE  shift, and go to state 6
+    TM_L    shift, and go to state 7
+
+    EXPR  go to state 11
+
+
+State 5
+
+    7 EXPR: TM_ALW . EXPR
+
+    TM_ID   shift, and go to state 1
+    TM_NEG  shift, and go to state 2
+    TM_T    shift, and go to state 3
+    TM_NXT  shift, and go to state 4
+    TM_ALW  shift, and go to state 5
+    TM_EVE  shift, and go to state 6
+    TM_L    shift, and go to state 7
+
+    EXPR  go to state 12
+
+
+State 6
+
+    8 EXPR: TM_EVE . EXPR
+
+    TM_ID   shift, and go to state 1
+    TM_NEG  shift, and go to state 2
+    TM_T    shift, and go to state 3
+    TM_NXT  shift, and go to state 4
+    TM_ALW  shift, and go to state 5
+    TM_EVE  shift, and go to state 6
+    TM_L    shift, and go to state 7
+
+    EXPR  go to state 13
+
+
+State 7
+
+    4 EXPR: TM_L . EXPR TM_R
+
+    TM_ID   shift, and go to state 1
+    TM_NEG  shift, and go to state 2
+    TM_T    shift, and go to state 3
+    TM_NXT  shift, and go to state 4
+    TM_ALW  shift, and go to state 5
+    TM_EVE  shift, and go to state 6
+    TM_L    shift, and go to state 7
+
+    EXPR  go to state 14
+
+
+State 8
+
+    0 $accept: WHOLE . $end
+
+    $end  shift, and go to state 15
+
+
+State 9
+
+    1 WHOLE: EXPR .
+    9 EXPR: EXPR . TM_AND EXPR
+   10     | EXPR . TM_OR EXPR
+   11     | EXPR . TM_IMP EXPR
+   12     | EXPR . TM_UTL EXPR
+
+    TM_AND  shift, and go to state 16
+    TM_OR   shift, and go to state 17
+    TM_IMP  shift, and go to state 18
+    TM_UTL  shift, and go to state 19
+
+    $default  reduce using rule 1 (WHOLE)
+
+
+State 10
+
+    5 EXPR: TM_NEG EXPR .
+    9     | EXPR . TM_AND EXPR
+   10     | EXPR . TM_OR EXPR
+   11     | EXPR . TM_IMP EXPR
+   12     | EXPR . TM_UTL EXPR
+
+    TM_UTL  shift, and go to state 19
+
+    $default  reduce using rule 5 (EXPR)
+
+
+State 11
+
+    6 EXPR: TM_NXT EXPR .
+    9     | EXPR . TM_AND EXPR
+   10     | EXPR . TM_OR EXPR
+   11     | EXPR . TM_IMP EXPR
+   12     | EXPR . TM_UTL EXPR
+
+    TM_UTL  shift, and go to state 19
+
+    $default  reduce using rule 6 (EXPR)
+
+
+State 12
+
+    7 EXPR: TM_ALW EXPR .
+    9     | EXPR . TM_AND EXPR
+   10     | EXPR . TM_OR EXPR
+   11     | EXPR . TM_IMP EXPR
+   12     | EXPR . TM_UTL EXPR
+
+    TM_UTL  shift, and go to state 19
+
+    $default  reduce using rule 7 (EXPR)
+
+
+State 13
+
+    8 EXPR: TM_EVE EXPR .
+    9     | EXPR . TM_AND EXPR
+   10     | EXPR . TM_OR EXPR
+   11     | EXPR . TM_IMP EXPR
+   12     | EXPR . TM_UTL EXPR
+
+    TM_UTL  shift, and go to state 19
+
+    $default  reduce using rule 8 (EXPR)
+
+
+State 14
+
+    4 EXPR: TM_L EXPR . TM_R
+    9     | EXPR . TM_AND EXPR
+   10     | EXPR . TM_OR EXPR
+   11     | EXPR . TM_IMP EXPR
+   12     | EXPR . TM_UTL EXPR
+
+    TM_AND  shift, and go to state 16
+    TM_OR   shift, and go to state 17
+    TM_IMP  shift, and go to state 18
+    TM_UTL  shift, and go to state 19
+    TM_R    shift, and go to state 20
+
+
+State 15
+
+    0 $accept: WHOLE $end .
+
+    $default  accept
+
+
+State 16
+
+    9 EXPR: EXPR TM_AND . EXPR
+
+    TM_ID   shift, and go to state 1
+    TM_NEG  shift, and go to state 2
+    TM_T    shift, and go to state 3
+    TM_NXT  shift, and go to state 4
+    TM_ALW  shift, and go to state 5
+    TM_EVE  shift, and go to state 6
+    TM_L    shift, and go to state 7
+
+    EXPR  go to state 21
+
+
+State 17
+
+   10 EXPR: EXPR TM_OR . EXPR
+
+    TM_ID   shift, and go to state 1
+    TM_NEG  shift, and go to state 2
+    TM_T    shift, and go to state 3
+    TM_NXT  shift, and go to state 4
+    TM_ALW  shift, and go to state 5
+    TM_EVE  shift, and go to state 6
+    TM_L    shift, and go to state 7
+
+    EXPR  go to state 22
+
+
+State 18
+
+   11 EXPR: EXPR TM_IMP . EXPR
+
+    TM_ID   shift, and go to state 1
+    TM_NEG  shift, and go to state 2
+    TM_T    shift, and go to state 3
+    TM_NXT  shift, and go to state 4
+    TM_ALW  shift, and go to state 5
+    TM_EVE  shift, and go to state 6
+    TM_L    shift, and go to state 7
+
+    EXPR  go to state 23
+
+
+State 19
+
+   12 EXPR: EXPR TM_UTL . EXPR
+
+    TM_ID   shift, and go to state 1
+    TM_NEG  shift, and go to state 2
+    TM_T    shift, and go to state 3
+    TM_NXT  shift, and go to state 4
+    TM_ALW  shift, and go to state 5
+    TM_EVE  shift, and go to state 6
+    TM_L    shift, and go to state 7
+
+    EXPR  go to state 24
+
+
+State 20
+
+    4 EXPR: TM_L EXPR TM_R .
+
+    $default  reduce using rule 4 (EXPR)
+
+
+State 21
+
+    9 EXPR: EXPR . TM_AND EXPR
+    9     | EXPR TM_AND EXPR .
+   10     | EXPR . TM_OR EXPR
+   11     | EXPR . TM_IMP EXPR
+   12     | EXPR . TM_UTL EXPR
+
+    TM_UTL  shift, and go to state 19
+
+    $default  reduce using rule 9 (EXPR)
+
+
+State 22
+
+    9 EXPR: EXPR . TM_AND EXPR
+   10     | EXPR . TM_OR EXPR
+   10     | EXPR TM_OR EXPR .
+   11     | EXPR . TM_IMP EXPR
+   12     | EXPR . TM_UTL EXPR
+
+    TM_AND  shift, and go to state 16
+    TM_UTL  shift, and go to state 19
+
+    $default  reduce using rule 10 (EXPR)
+
+
+State 23
+
+    9 EXPR: EXPR . TM_AND EXPR
+   10     | EXPR . TM_OR EXPR
+   11     | EXPR . TM_IMP EXPR
+   11     | EXPR TM_IMP EXPR .
+   12     | EXPR . TM_UTL EXPR
+
+    TM_AND  shift, and go to state 16
+    TM_OR   shift, and go to state 17
+    TM_UTL  shift, and go to state 19
+
+    $default  reduce using rule 11 (EXPR)
+
+
+State 24
+
+    9 EXPR: EXPR . TM_AND EXPR
+   10     | EXPR . TM_OR EXPR
+   11     | EXPR . TM_IMP EXPR
+   12     | EXPR . TM_UTL EXPR
+   12     | EXPR TM_UTL EXPR .
+
+    TM_UTL  shift, and go to state 19
+
+    $default  reduce using rule 12 (EXPR)

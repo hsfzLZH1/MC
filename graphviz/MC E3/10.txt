@@ -1,0 +1,25 @@
+digraph {
+  graph[nodesep="0.5"];
+  node[fontname="Consolas",fontsize=16]
+  edge[fontname="Consolas",fontsize=16]
+  node[shape=circle]
+  a[label="\{A\}",shape=doublecircle];
+  b[label="\{B\}"];
+  c[label="\{C\}"];
+  d[label="\{A,D\}",shape=doublecircle];
+  e[label="\{A,B\}",shape=doublecircle];
+  f[label="\{B,C\}"];
+  inv[label="",shape=none,height=.0,width=.0];
+  {rank="same";inv;a;b;c;}
+  {rank="same";d;e;f;}
+  inv->a;
+  a->b[xlabel="0"];
+  b->c[xlabel="0"];
+  c->a[xlabel="1"];
+  b->d[xlabel="1"];
+  d->e[xlabel="0"];
+  e->d[xlabel="1"];
+  e->f[xlabel="0"];
+  f->c[xlabel="0"];
+  f->d[xlabel="1"];
+}

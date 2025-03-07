@@ -1,0 +1,15 @@
+digraph {
+  spline=true;
+  node[fontname="Consolas",fontsize=16]
+  edge[fontname="Consolas",fontsize=16]
+  node[shape=circle]
+  a;
+  node[shape=doublecircle]
+  b;
+  inv1[label="",shape=none,height=.0,width=.0];
+  {rank="same";inv1;a;b;}
+  inv1->a;
+  a->b[label=<w<sub>1</sub>>];
+  a:ne->a:nw[label="true"];
+  b:ne->b:nw[label=<&#172;c<sub>1</sub>>];
+}

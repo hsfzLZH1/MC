@@ -1,0 +1,29 @@
+digraph {
+spline=true;
+  node[fontname="Consolas",fontsize=16]
+  edge[fontname="Consolas",fontsize=16]
+  node[shape=circle]
+  a;b;c;d;g;
+  node[shape=doublecircle]
+  e;f;
+  inv1[label="",shape=none,height=.0,width=.0];
+  inv2[label="",shape=none,height=.0,width=.0];
+  {rank="same";inv1;a;}
+  {rank="same";inv2;f;}
+  {rank="same";d;e;}
+  inv1->a;
+  inv2->f;
+  a->b[label="A"];
+  b->a[label="B"];
+  a->a[label="C"];
+  a->c[label="A"];
+  c->d[label="A"];
+  d->e[label="C"];
+  a->d[label="B"];
+  e->c[label="A"];
+  e->d[label="B"];
+  f->f[label="C"];
+  g->g[label="A"];
+  g->f[label="C"];
+  f->g[label="A"];
+}

@@ -1,0 +1,37 @@
+digraph {
+  node[fontname="Consolas",fontsize=16]
+  edge[fontname="Consolas",fontsize=16]
+  a[label=<P<sub>0</sub>:nc P<sub>1</sub>:nc<br/>y<sub>0</sub>=0 y<sub>1</sub>=0 s=1>];
+  b[label=<P<sub>0</sub>:nc P<sub>1</sub>:nc<br/>y<sub>0</sub>=0 y<sub>1</sub>=0 s=0>];
+  c[label=<P<sub>0</sub>:w P<sub>1</sub>:nc<br/>y<sub>0</sub>=1 y<sub>1</sub>=0 s=0>];
+  d[label=<P<sub>0</sub>:c P<sub>1</sub>:nc<br/>y<sub>0</sub>=1 y<sub>1</sub>=0 s=0>];
+  e[label=<P<sub>0</sub>:nc P<sub>1</sub>:w<br/>y<sub>0</sub>=0 y<sub>1</sub>=1 s=1>];
+  f[label=<P<sub>0</sub>:nc P<sub>1</sub>:c<br/>y<sub>0</sub>=0 y<sub>1</sub>=1 s=1>];
+  g[label=<P<sub>0</sub>:w P<sub>1</sub>:w<br/>y<sub>0</sub>=1 y<sub>1</sub>=1 s=1>];
+  h[label=<P<sub>0</sub>:c P<sub>1</sub>:w<br/>y<sub>0</sub>=1 y<sub>1</sub>=1 s=1>];
+  i[label=<P<sub>0</sub>:w P<sub>1</sub>:w<br/>y<sub>0</sub>=1 y<sub>1</sub>=1 s=0>];
+  j[label=<P<sub>0</sub>:w P<sub>1</sub>:c<br/>y<sub>0</sub>=1 y<sub>1</sub>=1 s=0>];
+  {rank="same";a;b;}
+  {rank="same";c;e;}
+  {rank="same";d;f;}
+  {rank="same";g;i;}
+  {rank="same";h;j;}
+  inv[label= "", shape=none,height=.0,width=.0];
+  inv->a;
+  a->c[xlabel=<P<sub>0</sub> l<sub>2</sub>>];
+  a->e[xlabel=<P<sub>1</sub> l<sub>2</sub>>];
+  b->c[xlabel=<P<sub>0</sub> l<sub>2</sub>>];
+  b->e[xlabel=<P<sub>1</sub> l<sub>2</sub>>];
+  c->d[xlabel=<P<sub>0</sub> l<sub>3</sub>>];
+  c->g[xlabel=<P<sub>1</sub> l<sub>2</sub>>];
+  d->b[xlabel=<P<sub>0</sub> l<sub>5</sub>>];
+  d->h[xlabel=<P<sub>1</sub> l<sub>2</sub>>];
+  e->f[xlabel=<P<sub>1</sub> l<sub>3</sub>>];
+  e->i[xlabel=<P<sub>0</sub> l<sub>2</sub>>];
+  f->a[xlabel=<P<sub>1</sub> l<sub>5</sub>>];
+  f->j[xlabel=<P<sub>0</sub> l<sub>2</sub>>];
+  g->h[xlabel=<P<sub>0</sub> l<sub>3</sub>>];
+  i->j[xlabel=<P<sub>1</sub> l<sub>3</sub>>];
+  h->e[xlabel=<P<sub>0</sub> l<sub>5</sub>>];
+  j->c[xlabel=<P<sub>1</sub> l<sub>5</sub>>];
+}

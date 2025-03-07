@@ -1,0 +1,27 @@
+digraph {
+  rankdir="LR";
+  node[fontname="Consolas",fontsize=16]
+  edge[fontname="Consolas",fontsize=16]
+  node[shape=circle]
+  A;C;D;E;G;
+  node[shape=doublecircle]
+  B;F; 
+  inv[label="",shape=none,height=.0,width=.0];
+  {rank="same";inv;A;}
+  //{rank="same";B;C;}
+  //{rank="same";D;E;F;G;}
+  inv->A;
+  A->B[xlabel=<&epsilon;>];
+  A->D[xlabel=<&epsilon;>];
+  B->C[xlabel="0"];
+  B->B[label="1"];
+  C->B[xlabel="0"];
+  C->C[label="1"];
+  D->D[label="0"];
+  D->E[xlabel="1"];
+  E->E[label="0"];
+  E->F[xlabel="1"];
+  F->F[label="0"];
+  F->G[xlabel="1"];
+  G->G[label="0,1"];
+}

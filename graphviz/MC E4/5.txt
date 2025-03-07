@@ -1,0 +1,36 @@
+digraph {
+spline=true;
+  node[fontname="Consolas",fontsize=16]
+  edge[fontname="Consolas",fontsize=16]
+  graph[ranksep="0.8"];
+  A[label=<A<br/>(&lt;n<sub>1</sub>,n<sub>2</sub>,y=1&gt;,a)>];
+  B[label=<B<br/>(&lt;w<sub>1</sub>,n<sub>2</sub>,y=1&gt;,a)>];
+  C[label=<C<br/>(&lt;w<sub>1</sub>,n<sub>2</sub>,y=1&gt;,b)>];
+  D[label=<D<br/>(&lt;n<sub>1</sub>,w<sub>2</sub>,y=1&gt;,a)>];
+  E[label=<E<br/>(&lt;c<sub>1</sub>,n<sub>2</sub>,y=0&gt;,a)>];
+  F[label=<F<br/>(&lt;w<sub>1</sub>,w<sub>2</sub>,y=1&gt;,a)>];
+  G[label=<G<br/>(&lt;w<sub>1</sub>,w<sub>2</sub>,y=1&gt;,b)>];
+  H[label=<H<br/>(&lt;n<sub>1</sub>,c<sub>2</sub>,y=0&gt;,a)>];
+  I[label=<I<br/>(&lt;c<sub>1</sub>,w<sub>2</sub>,y=0&gt;,a)>];
+  J[label=<J<br/>(&lt;w<sub>1</sub>,c<sub>2</sub>,y=0&gt;,a)>];
+  K[label=<K<br/>(&lt;w<sub>1</sub>,c<sub>2</sub>,y=0&gt;,b)>];
+  inv[label= "", shape=none,height=.0,width=.0];
+  {rank="same";inv;A;}
+  {rank="same";B;C;D;}
+  {rank="same";E;F;G;H;}
+  {rank="same";I;J;K;}
+  inv->A;
+  A->B,C,D; 
+  B->E,F,G;
+  C->G;
+  D->F,G,H;
+  E->A,I;
+  F->I,J,K;
+  G->K;
+  H->A,J,K;
+  I->D;
+  J->B,C;
+  K->C;
+  B->C->D[style=invis];
+  I->J->K[style=invis];
+}
