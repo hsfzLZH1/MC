@@ -4,6 +4,7 @@
 #include<vector>
 #include<string>
 #include<fstream>
+#include<map>
 using namespace std;
 
 struct Edge{int u,v,k;};//u--a_k->v
@@ -15,6 +16,7 @@ struct TS
   vector<string>A;	// set of actions
   int P;		// # of atomic propositions
   vector<string>AP;	// set of atomic propositions
+  map<string,int>mp;	// map from AP to index
   vector<Edge>edges;
   vector<vector<int> >L;// label function
 };

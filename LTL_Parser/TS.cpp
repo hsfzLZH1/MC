@@ -26,10 +26,15 @@ int ReadTS(TS&ts,const char*filename)
     ss.clear();ss.str(str);
     while(ss>>s)ts.A.push_back(s);
 
+    ts.mp.clear();
     getline(file>>ws,str);
     ss.clear();ss.str(str);
-    while(ss>>s)ts.AP.push_back(s);
-    ts.P=ts.AP.size();
+    while(ss>>s)
+    {
+      ts.AP.push_back(s);
+      ts.P++;
+      ts.mp[s]=ts.P;
+    }
 
     Edge edge;
     for(int i=0;i<ts.T;i++)
@@ -44,8 +49,10 @@ int ReadTS(TS&ts,const char*filename)
       ts.L[i].clear();
       getline(file>>ws,str);
       ss.clear();ss.str(str);
-      while(ss>>x)if(x!=-1)ts.L[i].push_back(x),cout<<"label "<<i<<":"<<x<<endl;
+      while(ss>>x)if(x!=-1)ts.L[i].push_back(x);
     }
+
+    file.close();
     return true;
   }
   else return false;

@@ -1,36 +1,53 @@
 #include <stdio.h>
+#include<cstring>
+#include<fstream>
+#include<iostream>
 #include "lang.h"
 #include "lexer.h"
 #include "parser.h"
 #include "TS.h"
+#include "closure.h"
 
 extern struct expr * root;
 int yyparse();
 
 TS ts;
+Closure C;
 
 int main(int argc, char * * argv) {
-	/*
-  if (argc == 1) {
-    printf("Error, not enough arguments!\n");
-    return 0;
-  }
-  if (argc >= 3) {
-    printf("Error, too many arguments!\n");
-    return 0;
-  }
-  yyin = fopen(argv[1], "rb");
-  if (yyin == NULL) {
-    printf("File %s can't be opened.\n", argv[1]);
-    return 0;
-  }*/
   ReadTS(ts,"TS.txt");
-  char str[]="X a";
-  YY_BUFFER_STATE buf;
-buf = yy_scan_string(str);
-yy_switch_to_buffer(buf);
-  yyparse();
-  yy_delete_buffer(buf);
-  //fclose(yyin);
-  print_expr(root);
+
+  ifstream file("benchmark.txt",ios::in);
+
+  int A,B,i;
+  string str;
+  file>>A>>B;
+
+  while(A--)
+  {
+    getline(file>>ws,str);
+    YY_BUFFER_STATE buf;
+    buf=yy_scan_string(str.c_str());
+    yy_switch_to_buffer(buf);
+    yyparse();
+    yy_delete_buffer(buf);
+    print_expr(root);cout<<endl;//
+    ComputeClosure(ts,root,C);
+    PrintClosure(C);//
+  }
+
+  while(B--)
+  {
+    file>>i;
+    getline(file>>ws,str);
+    YY_BUFFER_STATE buf;
+    buf=yy_scan_string(str.c_str());
+    yy_switch_to_buffer(buf);
+    yyparse();
+    yy_delete_buffer(buf);
+    print_expr(root);cout<<endl;//
+    ComputeClosure(ts,root,C);
+    PrintClosure(C);//
+  }
+  return 0;
 }

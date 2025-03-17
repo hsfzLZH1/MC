@@ -25,11 +25,14 @@ lexer.o: lexer.c lexer.h parser.h lang.h
 TS.o: TS.cpp
 	g++ -c TS.cpp
 
+closure.o: closure.cpp
+	g++ -c closure.cpp
+
 main.o: main.cpp lexer.h parser.h lang.h
 	g++ -c main.cpp
 
-main: lang.o parser.o lexer.o lib.o TS.o main.o
-	g++ lang.o parser.o lexer.o lib.o TS.o main.o -o main
+main: lang.o parser.o lexer.o lib.o TS.o closure.o main.o
+	g++ lang.o parser.o lexer.o lib.o TS.o closure.o main.o -o main
 
 all: main
 
