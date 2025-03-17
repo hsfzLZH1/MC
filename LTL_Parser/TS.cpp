@@ -6,12 +6,12 @@
 #include"TS.h"
 using namespace std;
 
-int ReadTS(TS&ts,const char*filename)
+int TS::ReadTS(const char*filename)
 {
   ifstream file(filename,ios::in);
   if(file.is_open())
   {
-    file>>ts.S>>ts.T;
+    file>>S>>T;
 
     string str;
     int x;
@@ -19,37 +19,37 @@ int ReadTS(TS&ts,const char*filename)
 
     getline(file>>ws,str);
     ss.clear();ss.str(str);
-    while(ss>>x)ts.I.push_back(x);
+    while(ss>>x)I.push_back(x);
 
     string s;
     getline(file>>ws,str);
     ss.clear();ss.str(str);
-    while(ss>>s)ts.A.push_back(s);
+    while(ss>>s)A.push_back(s);
 
-    ts.mp.clear();
+    mp.clear();
     getline(file>>ws,str);
     ss.clear();ss.str(str);
     while(ss>>s)
     {
-      ts.AP.push_back(s);
-      ts.P++;
-      ts.mp[s]=ts.P;
+      AP.push_back(s);
+      P++;
+      mp[s]=P;
     }
 
     Edge edge;
-    for(int i=0;i<ts.T;i++)
+    for(int i=0;i<T;i++)
     {
       file>>edge.u>>edge.k>>edge.v;
-      ts.edges.push_back(edge);
+      edges.push_back(edge);
     }
 
-    ts.L.resize(ts.S);
-    for(int i=0;i<ts.S;i++)
+    L.resize(S);
+    for(int i=0;i<S;i++)
     {
-      ts.L[i].clear();
+      L[i].clear();
       getline(file>>ws,str);
       ss.clear();ss.str(str);
-      while(ss>>x)if(x!=-1)ts.L[i].push_back(x);
+      while(ss>>x)if(x!=-1)L[i].push_back(x);
     }
 
     file.close();

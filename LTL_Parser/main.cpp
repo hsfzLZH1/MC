@@ -17,7 +17,7 @@ Closure C;
 GNBA GN;
 
 int main(int argc, char * * argv) {
-  ReadTS(ts,"TS.txt");
+  ts.ReadTS("TS.txt");
 
   ifstream file("benchmark.txt",ios::in);
 
@@ -34,10 +34,10 @@ int main(int argc, char * * argv) {
     yyparse();
     yy_delete_buffer(buf);
     print_expr(root);cout<<endl;//
-    ComputeClosure(ts,root,C);
-    PrintClosure(C);//
-    ComputeElem(C,GN);
-    PrintElem(GN);//
+    C.ComputeClosure(ts,root);
+    C.PrintClosure();//
+    GN.ComputeElem(C);
+    GN.PrintElem();//
   }
 
   while(B--)
@@ -50,10 +50,10 @@ int main(int argc, char * * argv) {
     yyparse();
     yy_delete_buffer(buf);
     print_expr(root);cout<<endl;//
-    ComputeClosure(ts,root,C);
-    PrintClosure(C);//
-    ComputeElem(C,GN);
-    PrintElem(GN);//
+    C.ComputeClosure(ts,root);
+    C.PrintClosure();//
+    GN.ComputeElem(C);
+    GN.PrintElem();//
   }
   return 0;
 }

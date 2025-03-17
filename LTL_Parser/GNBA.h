@@ -13,9 +13,14 @@ struct GNBA
   vector<bool*>F;	// accepting sets
 
   ~GNBA();
-};
 
-void ComputeElem(Closure&C,GNBA&gnba);
-void PrintElem(GNBA&gnba);
+  // compute Elementary subsets from closure
+  void ComputeElem(Closure&C);
+  void PrintElem();
+
+  // helpers
+  bool*tf;
+  void DFS_Elem(Closure&C,int n);
+};
 
 #endif

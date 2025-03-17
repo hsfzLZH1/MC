@@ -24,9 +24,11 @@ struct Closure
   int N;	// size of closure
   int A;	// # of APs
   vector<Expr>v;// expressions in closure
-};
 
-void ComputeClosure(TS&ts,struct expr*e,Closure&C);
-void PrintClosure(Closure&C);
+  // compute closure from TS and LTL formula
+  void ComputeClosure(TS&ts,struct expr*e);
+  void PrintClosure();
+  int DFS_Expr(TS&ts,struct expr*e);// helper
+};
 
 #endif

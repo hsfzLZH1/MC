@@ -19,8 +19,8 @@ struct TS
   map<string,int>mp;	// map from AP to index
   vector<Edge>edges;
   vector<vector<int> >L;// label function
-};
 
-int ReadTS(TS&ts,const char*filename);
+  int ReadTS(const char*filename); // read TS from file
+};
 
 #endif

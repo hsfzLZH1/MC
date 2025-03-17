@@ -9,47 +9,46 @@ GNBA::~GNBA()
   Elem.clear();
 }
 
-bool*tf;
-void DFS_Elem(Closure&C,GNBA&gnba,int n)
+void GNBA::DFS_Elem(Closure&C,int n)
 {
-  if(n==gnba.N+1)
+  if(n==N+1)
   {
-    bool*elem=new bool[gnba.N+1];
-    for(int i=0;i<=gnba.N;i++)elem[i]=tf[i];
-    gnba.Elem.push_back(elem);
-    gnba.V++;
+    bool*elem=new bool[N+1];
+    for(int i=0;i<=N;i++)elem[i]=tf[i];
+    Elem.push_back(elem);
+    V++;
     return;
   }
   if(C.v[n].op==E_VAR||C.v[n].op==E_NXT)
   {
     tf[n]=true;
-    DFS_Elem(C,gnba,n+1);
+    DFS_Elem(C,n+1);
     tf[n]=false;
-    DFS_Elem(C,gnba,n+1);
+    DFS_Elem(C,n+1);
     return;
   }
   if(C.v[n].op==E_NOT)
   {
     tf[n]=(!tf[C.v[n].a]);
-    DFS_Elem(C,gnba,n+1);
+    DFS_Elem(C,n+1);
     return;
   }
   if(C.v[n].op==E_AND)
   {
     tf[n]=(tf[C.v[n].a]&&tf[C.v[n].b]);
-    DFS_Elem(C,gnba,n+1);
+    DFS_Elem(C,n+1);
     return;
   }
   if(C.v[n].op==E_OR)
   {
     tf[n]=(tf[C.v[n].a]||tf[C.v[n].b]);
-    DFS_Elem(C,gnba,n+1);
+    DFS_Elem(C,n+1);
     return;
   }
   if(C.v[n].op==E_IMP)
   {
     tf[n]=((!tf[C.v[n].a])||tf[C.v[n].b]);
-    DFS_Elem(C,gnba,n+1);
+    DFS_Elem(C,n+1);
     return;
   }
   if(C.v[n].op==E_UNT)
@@ -57,37 +56,36 @@ void DFS_Elem(Closure&C,GNBA&gnba,int n)
     if(!((!tf[C.v[n].a])&&(!tf[C.v[n].b])))
     {
       tf[n]=true;
-      DFS_Elem(C,gnba,n+1);
+      DFS_Elem(C,n+1);
     }
     if(!tf[C.v[n].b])
     {
       tf[n]=false;
-      DFS_Elem(C,gnba,n+1);
+      DFS_Elem(C,n+1);
     }
     return;
   }
 }
 
-void ComputeElem(Closure&C,GNBA&gnba)
+void GNBA::ComputeElem(Closure&C)
 {
-  //mem leak
-  for(int i=0;i<gnba.Elem.size();i++)
-    if(gnba.Elem[i])delete[](gnba.Elem[i]);
-  gnba.V=0;
-  gnba.Elem.clear();
-  gnba.N=C.N;gnba.A=C.A;
-  tf=new bool[gnba.N+1];
+  for(int i=0;i<Elem.size();i++)
+    if(Elem[i])delete[](Elem[i]);
+  V=0;
+  Elem.clear();
+  N=C.N;A=C.A;
+  tf=new bool[N+1];
   tf[0]=true;
-  DFS_Elem(C,gnba,1);
+  DFS_Elem(C,1);
   delete[]tf;
 }
 
-void PrintElem(GNBA&gnba)
+void GNBA::PrintElem()
 {
-  cout<<gnba.V<<" "<<gnba.Elem.size()<<endl;
-  for(int i=0;i<gnba.V;i++)
+  cout<<V<<" "<<Elem.size()<<endl;
+  for(int i=0;i<V;i++)
   {
-    for(int j=0;j<=gnba.N;j++)if(gnba.Elem[i][j])cout<<"1";else cout<<"0";
+    for(int j=0;j<=N;j++)if(Elem[i][j])cout<<"1";else cout<<"0";
     cout<<endl;
   }
 }

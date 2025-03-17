@@ -2,7 +2,7 @@
 #include<iostream>
 using namespace std;
 
-int DFS_Expr(TS&ts,struct expr*e,Closure&C)
+int Closure::DFS_Expr(TS&ts,struct expr*e)
 {
   int cnt,x,y;
   switch(e->t)
@@ -17,53 +17,53 @@ int DFS_Expr(TS&ts,struct expr*e,Closure&C)
     }
     case T_UNOP:
     {
-      x=DFS_Expr(ts,e->d.UNOP.arg,C);
+      x=DFS_Expr(ts,e->d.UNOP.arg);
       switch(e->d.UNOP.op)
       {
         case T_N:
-          cnt=++C.N;
-	  C.v.push_back((Expr){E_NOT,x,0});
+          cnt=++N;
+	  v.push_back((Expr){E_NOT,x,0});
 	  break;
 	case T_X:
-	  cnt=++C.N;
-          C.v.push_back((Expr){E_NXT,x,0});
+	  cnt=++N;
+          v.push_back((Expr){E_NXT,x,0});
 	  break;
 	case T_G://todo
-          cnt=++C.N;
-	  C.v.push_back((Expr){E_NOT,x,0});
-	  cnt=++C.N;
-	  C.v.push_back((Expr){E_UNT,0,cnt-1});
-	  cnt=++C.N;
-	  C.v.push_back((Expr){E_NOT,cnt-1,0});
+          cnt=++N;
+	  v.push_back((Expr){E_NOT,x,0});
+	  cnt=++N;
+	  v.push_back((Expr){E_UNT,0,cnt-1});
+	  cnt=++N;
+	  v.push_back((Expr){E_NOT,cnt-1,0});
 	  break;
 	case T_F://todo
-	  cnt=++C.N;
-	  C.v.push_back((Expr){E_UNT,0,x});
+	  cnt=++N;
+	  v.push_back((Expr){E_UNT,0,x});
 	  break;
       }
       return cnt;
     }
     case T_BINOP:
     {
-      x=DFS_Expr(ts,e->d.BINOP.left,C);
-      y=DFS_Expr(ts,e->d.BINOP.right,C);
+      x=DFS_Expr(ts,e->d.BINOP.left);
+      y=DFS_Expr(ts,e->d.BINOP.right);
       switch(e->d.BINOP.op)
       {
         case T_AND:
-          cnt=++C.N;
-          C.v.push_back((Expr){E_AND,x,y});
+          cnt=++N;
+          v.push_back((Expr){E_AND,x,y});
           break;
         case T_OR:
-          cnt=++C.N;
-          C.v.push_back((Expr){E_OR,x,y});
+          cnt=++N;
+          v.push_back((Expr){E_OR,x,y});
           break;
         case T_IMP:
-	  cnt=++C.N;
-	  C.v.push_back((Expr){E_IMP,x,y});
+	  cnt=++N;
+	  v.push_back((Expr){E_IMP,x,y});
           break;
         case T_U:
-	  cnt=++C.N;
-	  C.v.push_back((Expr){E_UNT,x,y});
+	  cnt=++N;
+	  v.push_back((Expr){E_UNT,x,y});
           break;
       }
       return cnt;
@@ -73,23 +73,23 @@ int DFS_Expr(TS&ts,struct expr*e,Closure&C)
   return -1;
 }
 
-void ComputeClosure(TS&ts,struct expr*e,Closure&C)
+void Closure::ComputeClosure(TS&ts,struct expr*e)
 {
-  C.v.clear();
-  C.N=C.A=ts.P;
-  C.v.resize(C.A+1);
-  for(int i=0;i<=C.A;i++)
-    C.v[i].op=E_VAR,C.v[i].a=i;
+  v.clear();
+  N=A=ts.P;
+  v.resize(A+1);
+  for(int i=0;i<=A;i++)
+    v[i].op=E_VAR,v[i].a=i;
 
-  DFS_Expr(ts,e,C);
+  DFS_Expr(ts,e);
 }
 
-void PrintClosure(Closure&C)
+void Closure::PrintClosure()
 {
-  cout<<C.A<<" "<<C.N<<" "<<C.v.size()<<endl;
-  for(int i=0;i<=C.N;i++)
+  cout<<A<<" "<<N<<" "<<v.size()<<endl;
+  for(int i=0;i<=N;i++)
   {
-    switch(C.v[i].op)
+    switch(v[i].op)
     {
       case E_VAR:cout<<"VAR ";break;
       case E_NOT:cout<<"NOT ";break;
@@ -99,6 +99,6 @@ void PrintClosure(Closure&C)
       case E_NXT:cout<<"NXT ";break;
       case E_UNT:cout<<"UNT ";break;
     }
-    cout<<C.v[i].a<<" "<<C.v[i].b<<" : "<<i<<endl;
+    cout<<v[i].a<<" "<<v[i].b<<" : "<<i<<endl;
   }
 }
