@@ -2,11 +2,15 @@
 #include "lang.h"
 #include "lexer.h"
 #include "parser.h"
+#include "TS.h"
 
 extern struct expr * root;
 int yyparse();
 
+TS ts;
+
 int main(int argc, char * * argv) {
+	/*
   if (argc == 1) {
     printf("Error, not enough arguments!\n");
     return 0;
@@ -19,8 +23,14 @@ int main(int argc, char * * argv) {
   if (yyin == NULL) {
     printf("File %s can't be opened.\n", argv[1]);
     return 0;
-  }
+  }*/
+  ReadTS(ts,"TS.txt");
+  char str[]="X a";
+  YY_BUFFER_STATE buf;
+buf = yy_scan_string(str);
+yy_switch_to_buffer(buf);
   yyparse();
-  fclose(yyin);
+  yy_delete_buffer(buf);
+  //fclose(yyin);
   print_expr(root);
 }

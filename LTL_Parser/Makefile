@@ -11,22 +11,25 @@ parser.h: lang.y
 	bison -o parser.c -d -v lang.y
 
 lib.o: lib.c lib.h
-	gcc -c lib.c
+	g++ -c lib.c
 
 lang.o: lang.c lang.h lib.h
-	gcc -c lang.c
+	g++ -c lang.c
 
 parser.o: parser.c parser.h lexer.h lang.h
-	gcc -c parser.c
+	g++ -c parser.c
 
 lexer.o: lexer.c lexer.h parser.h lang.h
-	gcc -c lexer.c
+	g++ -c lexer.c
 
-main.o: main.c lexer.h parser.h lang.h
-	gcc -c main.c
+TS.o: TS.cpp
+	g++ -c TS.cpp
 
-main: lang.o parser.o lexer.o lib.o main.o
-	gcc lang.o parser.o lexer.o lib.o main.o -o main
+main.o: main.cpp lexer.h parser.h lang.h
+	g++ -c main.cpp
+
+main: lang.o parser.o lexer.o lib.o TS.o main.o
+	g++ lang.o parser.o lexer.o lib.o TS.o main.o -o main
 
 all: main
 
