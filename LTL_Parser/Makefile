@@ -28,11 +28,14 @@ TS.o: TS.cpp
 closure.o: closure.cpp
 	g++ -c closure.cpp
 
+GNBA.o: GNBA.cpp
+	g++ -c GNBA.cpp
+
 main.o: main.cpp lexer.h parser.h lang.h
 	g++ -c main.cpp
 
-main: lang.o parser.o lexer.o lib.o TS.o closure.o main.o
-	g++ lang.o parser.o lexer.o lib.o TS.o closure.o main.o -o main
+main: lang.o parser.o lexer.o lib.o TS.o closure.o GNBA.o main.o
+	g++ lang.o parser.o lexer.o lib.o TS.o closure.o GNBA.o main.o -o main
 
 all: main
 

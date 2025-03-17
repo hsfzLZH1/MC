@@ -26,7 +26,8 @@ void*none;
 %left TM_IMP
 %left TM_OR
 %left TM_AND
-%right TM_NEG TM_NXT TM_ALW TM_EVE TM_UTL
+%left TM_UTL
+%right TM_NEG TM_NXT TM_ALW TM_EVE
 
 %%
 

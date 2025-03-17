@@ -7,12 +7,14 @@
 #include "parser.h"
 #include "TS.h"
 #include "closure.h"
+#include "GNBA.h"
 
 extern struct expr * root;
 int yyparse();
 
 TS ts;
 Closure C;
+GNBA GN;
 
 int main(int argc, char * * argv) {
   ReadTS(ts,"TS.txt");
@@ -34,6 +36,8 @@ int main(int argc, char * * argv) {
     print_expr(root);cout<<endl;//
     ComputeClosure(ts,root,C);
     PrintClosure(C);//
+    ComputeElem(C,GN);
+    PrintElem(GN);//
   }
 
   while(B--)
@@ -48,6 +52,8 @@ int main(int argc, char * * argv) {
     print_expr(root);cout<<endl;//
     ComputeClosure(ts,root,C);
     PrintClosure(C);//
+    ComputeElem(C,GN);
+    PrintElem(GN);//
   }
   return 0;
 }

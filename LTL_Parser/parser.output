@@ -183,8 +183,6 @@ State 10
    11     | EXPR • TM_IMP EXPR
    12     | EXPR • TM_UTL EXPR
 
-    TM_UTL  shift, and go to state 19
-
     $default  reduce using rule 5 (EXPR)
 
 
@@ -195,8 +193,6 @@ State 11
    10     | EXPR • TM_OR EXPR
    11     | EXPR • TM_IMP EXPR
    12     | EXPR • TM_UTL EXPR
-
-    TM_UTL  shift, and go to state 19
 
     $default  reduce using rule 6 (EXPR)
 
@@ -209,8 +205,6 @@ State 12
    11     | EXPR • TM_IMP EXPR
    12     | EXPR • TM_UTL EXPR
 
-    TM_UTL  shift, and go to state 19
-
     $default  reduce using rule 7 (EXPR)
 
 
@@ -221,8 +215,6 @@ State 13
    10     | EXPR • TM_OR EXPR
    11     | EXPR • TM_IMP EXPR
    12     | EXPR • TM_UTL EXPR
-
-    TM_UTL  shift, and go to state 19
 
     $default  reduce using rule 8 (EXPR)
 
@@ -365,7 +357,5 @@ State 24
    11     | EXPR • TM_IMP EXPR
    12     | EXPR • TM_UTL EXPR
    12     | EXPR TM_UTL EXPR •
-
-    TM_UTL  shift, and go to state 19
 
     $default  reduce using rule 12 (EXPR)
