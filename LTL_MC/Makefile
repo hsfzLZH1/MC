@@ -31,11 +31,14 @@ GNBA.o: GNBA.cpp
 NBA.o: NBA.cpp
 	g++ -c NBA.cpp
 
+MC.o: MC.cpp
+	g++ -c MC.cpp
+
 main.o: main.cpp lexer.h parser.h lang.h
 	g++ -c main.cpp
 
-main: lang.o parser.o lexer.o lib.o TS.o GNBA.o NBA.o main.o
-	g++ lang.o parser.o lexer.o lib.o TS.o GNBA.o NBA.o main.o -o main
+main: lang.o parser.o lexer.o lib.o TS.o GNBA.o NBA.o MC.o main.o
+	g++ lang.o parser.o lexer.o lib.o TS.o GNBA.o NBA.o MC.o main.o -o main
 
 all: main
 

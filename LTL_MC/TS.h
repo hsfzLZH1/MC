@@ -7,8 +7,6 @@
 #include<map>
 using namespace std;
 
-struct Edge{int u,v,k;};//u--a_k->v
-
 struct TS
 {
   int S,T;		// # of states, # of transitions
@@ -16,8 +14,9 @@ struct TS
   vector<string>A;	// set of actions
   int P;		// # of atomic propositions
   vector<string>AP;	// set of atomic propositions
-  map<string,int>mp;	// map from AP to index
-  vector<Edge>edges;
+  map<string,int>mp;	// map from AP to its index
+  vector<vector<int> >G;// adjacency matrix
+  vector<vector<int> >a;// actions on transitions
   vector<vector<int> >L;// label function
 
   int ReadTS(const char*filename); // read TS from file

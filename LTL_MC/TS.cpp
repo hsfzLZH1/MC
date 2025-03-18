@@ -8,6 +8,18 @@ using namespace std;
 
 int TS::ReadTS(const char*filename)
 {
+  // init
+  I.clear();
+  A.clear();
+  AP.clear();
+  mp.clear();
+  for(int i=0;i<G.size();i++)G[i].clear();
+  for(int i=0;i<a.size();i++)a[i].clear();
+  for(int i=0;i<L.size();i++)L[i].clear();
+  G.clear();
+  a.clear();
+  L.clear();
+  
   ifstream file(filename,ios::in);
   if(file.is_open())
   {
@@ -36,11 +48,13 @@ int TS::ReadTS(const char*filename)
       mp[s]=P;
     }
 
-    Edge edge;
+    G.resize(S);a.resize(S);
     for(int i=0;i<T;i++)
     {
-      file>>edge.u>>edge.k>>edge.v;
-      edges.push_back(edge);
+      int u,k,v;
+      file>>u>>k>>v;
+      G[u].push_back(v);
+      a[u].push_back(k);
     }
 
     L.resize(S);

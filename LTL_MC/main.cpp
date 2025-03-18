@@ -8,11 +8,12 @@
 #include "TS.h"
 #include "GNBA.h"
 #include "NBA.h"
+#include "MC.h"
 
 extern struct expr * root;
 int yyparse();
 
-TS ts;
+TS ts,prod;
 Closure C;
 GNBA GN;
 NBA N;
@@ -43,6 +44,8 @@ int main(int argc, char * * argv) {
     GN.PrintGF();
     N.Construct(GN);
     N.Print();//
+    ProdConstruction(ts,N,prod);
+    NestDFS(prod);
   }
 
   while(B--)
@@ -63,6 +66,8 @@ int main(int argc, char * * argv) {
     GN.PrintGF();
     N.Construct(GN);
     N.Print();//
+    ProdConstruction(ts,N,prod);
+    NestDFS(prod);
   }
   return 0;
 }
