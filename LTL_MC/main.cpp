@@ -6,8 +6,8 @@
 #include "lexer.h"
 #include "parser.h"
 #include "TS.h"
-#include "closure.h"
 #include "GNBA.h"
+#include "NBA.h"
 
 extern struct expr * root;
 int yyparse();
@@ -15,6 +15,7 @@ int yyparse();
 TS ts;
 Closure C;
 GNBA GN;
+NBA N;
 
 int main(int argc, char * * argv) {
   ts.ReadTS("TS.txt");
@@ -40,6 +41,8 @@ int main(int argc, char * * argv) {
     GN.PrintElem();//
     GN.ComputeGF(C);
     GN.PrintGF();
+    N.Construct(GN);
+    N.Print();//
   }
 
   while(B--)
@@ -58,6 +61,8 @@ int main(int argc, char * * argv) {
     GN.PrintElem();//
     GN.ComputeGF(C);
     GN.PrintGF();
+    N.Construct(GN);
+    N.Print();//
   }
   return 0;
 }
