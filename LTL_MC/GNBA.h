@@ -17,6 +17,8 @@ struct GNBA
   // compute Elementary subsets from closure
   void ComputeElem(Closure&C);
   void PrintElem();
+  void ComputeGF(Closure&C);
+  void PrintGF();
 
   // helpers
   bool*tf;

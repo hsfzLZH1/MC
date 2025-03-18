@@ -38,6 +38,8 @@ int main(int argc, char * * argv) {
     C.PrintClosure();//
     GN.ComputeElem(C);
     GN.PrintElem();//
+    GN.ComputeGF(C);
+    GN.PrintGF();
   }
 
   while(B--)
@@ -54,6 +56,8 @@ int main(int argc, char * * argv) {
     C.PrintClosure();//
     GN.ComputeElem(C);
     GN.PrintElem();//
+    GN.ComputeGF(C);
+    GN.PrintGF();
   }
   return 0;
 }
