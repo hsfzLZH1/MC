@@ -58,6 +58,7 @@ void ProdConstruction(TS&ts,NBA&N,TS&prod)
       {
         int qq=N.G[q][t];
 	int x=s*K+qq;
+	cout<<"Init "<<x<<endl;
 	if(!vis[x])vis[x]=true,prod.I.push_back(x),Q.push(x);
       }
     }
@@ -71,15 +72,48 @@ void ProdConstruction(TS&ts,NBA&N,TS&prod)
    *}*/
 
   // BFS, add reachable states
+  bool*isF=new bool[N.V];
+  for(int i=0;i<N.V;i++)isF[i]=false;
+  for(int i=0;i<N.F.size();i++)isF[N.F[i]]=true;
   while(!Q.empty())
   {
-    //todo
-    //when state x is expanding, label it
-    Q.pop();
+    int x=Q.front();Q.pop();
+    int s=x/K,q=x%K;
+    prod.L[x].push_back(q);
+    if(isF[q])prod.L[x].push_back(K);// label F
+				
+    for(int i=0;i<ts.G[s].size();i++)
+    {
+      int t=ts.G[s][i];
+      bool*tf=new bool[ts.P];
+      for(int k=0;k<ts.P;k++)tf[k]=false;
+      for(int k=0;k<ts.L[t].size();k++)tf[ts.L[t][k]]=true;
+
+      for(int l=0;l<N.G[q].size();l++)
+      {
+        bool eq=true;
+        for(int k=0;k<ts.P;k++)if(tf[k]!=N.act[q][l][k])eq=false;
+        if(eq)// (s,q)->(t,p)
+        {
+          int p=N.G[q][l];
+          int y=t*K+p;
+          if(!vis[y])vis[y]=true,Q.push(y);
+	  prod.G[x].push_back(y);
+	  prod.a[x].push_back(ts.a[s][i]);
+	  cout<<"addedge "<<x<<"->"<<y<<" act:"<<ts.a[s][i]<<endl;
+        }
+      }
+      delete[]tf;
+    }
   }
+
+  delete[]vis;
+  delete[]isF;
 }
 
+bool ans=true;
 bool NestDFS(TS&ts)
 {
-  return false;
+  
+  return ans;
 }
