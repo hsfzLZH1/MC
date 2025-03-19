@@ -15,5 +15,6 @@ void ProdConstruction(TS&ts,NBA&N,TS&prod);
 bool NestedDFSVerbose=false;
 vector<int>CounterEg;
 bool NestDFS(TS&ts);
+void PrintCounterEg();
 
 #endif

@@ -132,11 +132,17 @@ void InnerDFS(TS&ts,int x,int st)
     {
       ans=false;
       if(NestedDFSVerbose)cout<<"Find CounterExample.\n";
+      CounterEg.push_back(ts.a[x][i]);
+      CounterEg.push_back(ts.G[x][i]);
+      CounterEg.push_back(-1);
       return;
     }
     if(ans&&!ivis[ts.G[x][i]])
     {
+      CounterEg.push_back(ts.a[x][i]);
+      CounterEg.push_back(ts.G[x][i]);
       InnerDFS(ts,ts.G[x][i],st);
+      if(ans)CounterEg.pop_back(),CounterEg.pop_back();
     }
   }
 }
@@ -147,7 +153,10 @@ void OuterDFS(TS&ts,int x)
   ovis[x]=true;
   for(int i=0;i<ts.G[x].size();i++)if(ans&&!ovis[ts.G[x][i]])
   {
+    CounterEg.push_back(ts.a[x][i]);
+    CounterEg.push_back(ts.G[x][i]);
     OuterDFS(ts,ts.G[x][i]);
+    if(ans)CounterEg.pop_back(),CounterEg.pop_back();
   }
   if(NestedDFSVerbose)cout<<"Fully"<<endl;
   // now x is fully expanded
@@ -155,7 +164,12 @@ void OuterDFS(TS&ts,int x)
   for(int i=0;i<ts.L[x].size();i++)if(ts.L[x][i]==ts.P-1)
   {
     if(NestedDFSVerbose)cout<<"final state "<<x<<" "<<ts.AP.size()<<" "<<ts.P-1<<"is fully expanded"<<endl;
-    if(ans&&!ivis[x])InnerDFS(ts,x,x);
+    if(ans&&!ivis[x])
+    {
+      CounterEg.push_back(-1);
+      InnerDFS(ts,x,x);
+      if(ans)CounterEg.pop_back();
+    }
     break;
   }
 }
@@ -170,10 +184,30 @@ bool NestDFS(TS&ts)
 
   for(int i=0;i<ts.I.size();i++)if(ans&&!ovis[ts.I[i]])
   {
+    CounterEg.push_back(ts.I[i]);
     OuterDFS(ts,ts.I[i]);
+    if(ans)CounterEg.pop_back();
   }
 
   delete[]ovis;
   delete[]ivis;
   return ans;
+}
+
+void PrintCounterEg()
+{
+  int cnt=0;
+  bool sa=false;// false-state,true-action
+  for(int i=0;i<CounterEg.size();i++)
+  {
+    if(CounterEg[i]==-1)
+    {
+      if(!cnt)cout<<"(";
+      else cout<<")^w";
+      cnt++;
+    }
+    else if(!sa)cout<<CounterEg[i],sa=!sa;
+    else cout<<"-["<<CounterEg[i]<<"]>",sa=!sa;
+  }
+  cout<<endl;
 }

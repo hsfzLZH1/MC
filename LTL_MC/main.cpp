@@ -44,9 +44,10 @@ int main(int argc, char * * argv) {
     //GN.PrintGF();//
     N.Construct(GN);
     //N.Print();//
+    //ProdVerbose=true;//
     ProdConstruction(ts,N,prod);
     if(NestDFS(prod))printf("1\n");
-    else printf("0\n");
+    else printf("0\n");//,PrintCounterEg();//
   }
 
   while(B--)
@@ -71,7 +72,7 @@ int main(int argc, char * * argv) {
     //N.Print();//
     ProdConstruction(ts,N,prod);
     if(NestDFS(prod))printf("1\n");
-    else printf("0\n");
+    else printf("0\n");//,PrintCounterEg();
   }
   return 0;
 }
