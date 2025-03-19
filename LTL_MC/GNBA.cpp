@@ -81,9 +81,9 @@ void Closure::ComputeClosure(TS&ts,struct expr*e)
   for(int i=0;i<=A;i++)
     v[i].op=E_VAR,v[i].a=i;
 
-  DFS_Expr(ts,e);
+  int rt=DFS_Expr(ts,e);
   ++N;
-  v.push_back((Expr){E_NOT,N-1,0});// closure of \neg e
+  v.push_back((Expr){E_NOT,rt,0});// closure of \neg e
 }
 
 void Closure::PrintClosure()
