@@ -35,17 +35,18 @@ int main(int argc, char * * argv) {
     yy_switch_to_buffer(buf);
     yyparse();
     yy_delete_buffer(buf);
-    print_expr(root);cout<<endl;//
+    //print_expr(root);cout<<endl;//
     C.ComputeClosure(ts,root);
-    C.PrintClosure();//
+    //C.PrintClosure();//
     GN.ComputeElem(C);
-    GN.PrintElem();//
+    //GN.PrintElem();//
     GN.ComputeGF(C);
-    GN.PrintGF();
+    //GN.PrintGF();//
     N.Construct(GN);
-    N.Print();//
+    //N.Print();//
     ProdConstruction(ts,N,prod);
-    NestDFS(prod);
+    if(NestDFS(prod))printf("1\n");
+    else printf("0\n");
   }
 
   while(B--)
@@ -57,17 +58,20 @@ int main(int argc, char * * argv) {
     yy_switch_to_buffer(buf);
     yyparse();
     yy_delete_buffer(buf);
-    print_expr(root);cout<<endl;//
+    // change Initial set of TS to {i}
+    ts.I.clear();ts.I.push_back(i);
+    //print_expr(root);cout<<endl;//
     C.ComputeClosure(ts,root);
-    C.PrintClosure();//
+    //C.PrintClosure();//
     GN.ComputeElem(C);
-    GN.PrintElem();//
+    //GN.PrintElem();//
     GN.ComputeGF(C);
-    GN.PrintGF();
+    //GN.PrintGF();
     N.Construct(GN);
-    N.Print();//
+    //N.Print();//
     ProdConstruction(ts,N,prod);
-    NestDFS(prod);
+    if(NestDFS(prod))printf("1\n");
+    else printf("0\n");
   }
   return 0;
 }

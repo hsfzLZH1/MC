@@ -4,6 +4,8 @@
 #include<iostream>
 using namespace std;
 
+extern bool ProdVerbose;
+
 // given TS ts and NBA A, construct product in prod
 // only the reachable part from initial states
 void ProdConstruction(TS&ts,NBA&N,TS&prod)
@@ -33,9 +35,11 @@ void ProdConstruction(TS&ts,NBA&N,TS&prod)
   for(int i=0;i<N.V;i++)
   {
     string str=to_string(i);
+    prod.AP.push_back(str);
     prod.mp[str]=i;
   }
   string ss("F");
+  prod.AP.push_back(ss);
   prod.mp[ss]=prod.P-1;
 
   bool*vis=new bool[prod.S];
@@ -58,7 +62,7 @@ void ProdConstruction(TS&ts,NBA&N,TS&prod)
       {
         int qq=N.G[q][t];
 	int x=s*K+qq;
-	cout<<"Init "<<x<<endl;
+	if(ProdVerbose)cout<<"Init "<<x<<endl;
 	if(!vis[x])vis[x]=true,prod.I.push_back(x),Q.push(x);
       }
     }
@@ -98,9 +102,10 @@ void ProdConstruction(TS&ts,NBA&N,TS&prod)
           int p=N.G[q][l];
           int y=t*K+p;
           if(!vis[y])vis[y]=true,Q.push(y);
+	  prod.T++;
 	  prod.G[x].push_back(y);
 	  prod.a[x].push_back(ts.a[s][i]);
-	  cout<<"addedge "<<x<<"->"<<y<<" act:"<<ts.a[s][i]<<endl;
+	  if(ProdVerbose)cout<<"addedge "<<x<<"->"<<y<<" act:"<<ts.a[s][i]<<endl;
         }
       }
       delete[]tf;
@@ -111,9 +116,64 @@ void ProdConstruction(TS&ts,NBA&N,TS&prod)
   delete[]isF;
 }
 
-bool ans=true;
+bool ans;
+extern vector<int>CounterEg;
+extern bool NestedDFSVerbose;
+bool*ovis,*ivis;// visit status of outer DFS and inner DFS
+
+// Inner DFS at x start from st
+void InnerDFS(TS&ts,int x,int st)
+{
+  if(NestedDFSVerbose)cout<<"Inner "<<x<<" "<<st<<endl;
+  ivis[x]=true;
+  for(int i=0;i<ts.G[x].size();i++)
+  {
+    if(ts.G[x][i]==st)
+    {
+      ans=false;
+      if(NestedDFSVerbose)cout<<"Find CounterExample.\n";
+      return;
+    }
+    if(ans&&!ivis[ts.G[x][i]])
+    {
+      InnerDFS(ts,ts.G[x][i],st);
+    }
+  }
+}
+
+void OuterDFS(TS&ts,int x)
+{
+  if(NestedDFSVerbose)cout<<"Outer "<<x<<endl;
+  ovis[x]=true;
+  for(int i=0;i<ts.G[x].size();i++)if(ans&&!ovis[ts.G[x][i]])
+  {
+    OuterDFS(ts,ts.G[x][i]);
+  }
+  if(NestedDFSVerbose)cout<<"Fully"<<endl;
+  // now x is fully expanded
+  bool isFinal=false;
+  for(int i=0;i<ts.L[x].size();i++)if(ts.L[x][i]==ts.P-1)
+  {
+    if(NestedDFSVerbose)cout<<"final state "<<x<<" "<<ts.AP.size()<<" "<<ts.P-1<<"is fully expanded"<<endl;
+    if(ans&&!ivis[x])InnerDFS(ts,x,x);
+    break;
+  }
+}
+
 bool NestDFS(TS&ts)
 {
-  
+  ovis=new bool[ts.S];
+  ivis=new bool[ts.S];
+  for(int i=0;i<ts.S;i++)ovis[i]=ivis[i]=false;
+  ans=true;
+  CounterEg.clear();
+
+  for(int i=0;i<ts.I.size();i++)if(ans&&!ovis[ts.I[i]])
+  {
+    OuterDFS(ts,ts.I[i]);
+  }
+
+  delete[]ovis;
+  delete[]ivis;
   return ans;
 }
