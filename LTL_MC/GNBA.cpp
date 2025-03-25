@@ -2,6 +2,38 @@
 #include<iostream>
 using namespace std;
 
+// used in set
+struct cmp
+{
+  bool operator()(Expr x,Expr y)const
+  {
+    return (x.op==y.op)?((x.a==y.a)?(x.b<y.b):(x.a<y.a)):(x.op<y.op);
+  }
+};
+
+map<Expr,int,cmp>st;
+
+int Closure::AddExpr(Expr node)
+{
+  int rt=-1;
+  if(st[node])rt=st[node];
+  if(node.op==E_AND||node.op==E_OR)// simple equivalence
+  {
+    swap(node.a,node.b);
+    if(rt==-1&&st[node])rt=st[node];
+    swap(node.a,node.b);
+  }
+  if(rt==-1)
+  {
+    rt=++N;
+    v.push_back(node);
+    st[node]=rt;
+  }
+  return rt;
+}
+
+// compute closure given AST subtree e
+// return root index
 int Closure::DFS_Expr(TS&ts,struct expr*e)
 {
   int cnt,x,y;
@@ -18,27 +50,22 @@ int Closure::DFS_Expr(TS&ts,struct expr*e)
     case T_UNOP:
     {
       x=DFS_Expr(ts,e->d.UNOP.arg);
+      Expr node;
       switch(e->d.UNOP.op)
       {
         case T_N:
-          cnt=++N;
-	  v.push_back((Expr){E_NOT,x,0});
+          cnt=AddExpr((Expr){E_NOT,x,0});
 	  break;
 	case T_X:
-	  cnt=++N;
-          v.push_back((Expr){E_NXT,x,0});
+	  cnt=AddExpr((Expr){E_NXT,x,0});
 	  break;
-	case T_G://todo
-          cnt=++N;
-	  v.push_back((Expr){E_NOT,x,0});
-	  cnt=++N;
-	  v.push_back((Expr){E_UNT,0,cnt-1});
-	  cnt=++N;
-	  v.push_back((Expr){E_NOT,cnt-1,0});
+	case T_G:
+          cnt=AddExpr((Expr){E_NOT,x,0});
+	  cnt=AddExpr((Expr){E_UNT,0,cnt});
+	  cnt=AddExpr((Expr){E_NOT,cnt,0});
 	  break;
-	case T_F://todo
-	  cnt=++N;
-	  v.push_back((Expr){E_UNT,0,x});
+	case T_F:
+	  cnt=AddExpr((Expr){E_UNT,0,x});
 	  break;
       }
       return cnt;
@@ -50,20 +77,16 @@ int Closure::DFS_Expr(TS&ts,struct expr*e)
       switch(e->d.BINOP.op)
       {
         case T_AND:
-          cnt=++N;
-          v.push_back((Expr){E_AND,x,y});
+          cnt=AddExpr((Expr){E_AND,x,y});
           break;
         case T_OR:
-          cnt=++N;
-          v.push_back((Expr){E_OR,x,y});
+	  cnt=AddExpr((Expr){E_OR,x,y});
           break;
         case T_IMP:
-	  cnt=++N;
-	  v.push_back((Expr){E_IMP,x,y});
+	  cnt=AddExpr((Expr){E_IMP,x,y});
           break;
         case T_U:
-	  cnt=++N;
-	  v.push_back((Expr){E_UNT,x,y});
+	  cnt=AddExpr((Expr){E_UNT,x,y});
           break;
       }
       return cnt;
@@ -81,6 +104,7 @@ void Closure::ComputeClosure(TS&ts,struct expr*e)
   for(int i=0;i<=A;i++)
     v[i].op=E_VAR,v[i].a=i;
 
+  st.clear();
   int rt=DFS_Expr(ts,e);
   ++N;
   v.push_back((Expr){E_NOT,rt,0});// closure of \neg e

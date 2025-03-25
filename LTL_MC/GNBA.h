@@ -28,6 +28,7 @@ struct Closure
   // compute closure from TS and LTL formula
   void ComputeClosure(TS&ts,struct expr*e);
   void PrintClosure();
+  int AddExpr(Expr node);// helper
   int DFS_Expr(TS&ts,struct expr*e);// helper
 };
 
